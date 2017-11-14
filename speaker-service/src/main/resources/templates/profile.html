@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Conference Application</title>
+
+    <link href="/webjars/bulma/0.6.0/css/bulma.css" rel="stylesheet">
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="/webjars/timeago.js/3.0.0/dist/timeago.js"></script>
+</head>
+<body>
+<section class="hero is-primary is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Speaker Profile
+            </h1>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="content">
+            <article class="media">
+                <figure class="media-left">
+                    <p class="image is-128x128">
+                        <img src="{{github.user.avatar}}">
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <p class="title is-4">{{speaker.firstName}} {{speaker.lastName}}</p>
+                    <p class="subtitle is-6">@{{speaker.twitter}}</p>
+                    <div class="content">
+                        <p>{{speaker.bio}}</p>
+                    </div>
+                </div>
+            </article>
+            <h4>Github Activity Feed</h4>
+            <ul>
+                {{#github.events}}
+                <li>
+                    {{action}} on <a href="{{repositoryUrl}}">{{repositoryName}}</a> - <time datetime="{{createdAt}}">{{createdAt}}</time>
+                </li>
+                {{/github.events}}
+            </ul>
+        </div>
+    </div>
+</section>
+<script>
+    var timeagoInstance = timeago();
+    var nodes = document.querySelectorAll('time');
+    timeagoInstance.render(nodes, 'en_US');
+</script>
+</body>
+</html>
