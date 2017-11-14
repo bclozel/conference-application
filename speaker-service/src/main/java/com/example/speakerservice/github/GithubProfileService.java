@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.sleuth.instrument.web.client.TraceRestTemplateInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,8 +19,9 @@ public class GithubProfileService {
 
 	private final Logger logger = LoggerFactory.getLogger(GithubProfileService.class);
 
-	public GithubProfileService(RestTemplateBuilder builder, LoadBalancerClient loadBalancer) {
-		this.restTemplate = builder.build();
+	public GithubProfileService(RestTemplateBuilder builder,
+			TraceRestTemplateInterceptor interceptor, LoadBalancerClient loadBalancer) {
+		this.restTemplate = builder.additionalInterceptors(interceptor).build();
 		this.loadBalancer = loadBalancer;
 	}
 
